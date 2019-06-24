@@ -10,8 +10,38 @@
             <div>
                 {% for col in range(8) %}
                     <div class="game-cell {{ 'light' if (col+row) % 2 == 1 else 'dark' }}"
-                         id="{{ col }}:{{ row }}">
-                    <i id="icon-{{ col }}:{{ row }}"></i>
+                        id="{{ col }}:{{ row }}">
+                    {% if row == 0 %}
+                        {% if col in [0, 7] %}
+                             <i class="fas fa-chess-rook white"></i>
+                        {% elif col in [1, 6] %}
+                             <i class="fas fa-chess-knight white"></i>
+                        {% elif col in [2, 5] %}
+                             <i class="fas fa-chess-bishop white"></i>
+                        {% elif col == 3 %}
+                             <i class="fas fa-chess-queen white"></i>
+                        {% else %}
+                             <i class="fas fa-chess-king white"></i>
+                        {% endif %}
+                    {% elif row == 1 %}
+                        <i class="fas fa-chess-pawn white"></i>
+                    {% elif row == 6 %}
+                        <i class="fas fa-chess-pawn black"></i>
+                    {% elif row == 7 %}
+                        {% if col in [0, 7] %}
+                             <i class="fas fa-chess-rook black"></i>
+                        {% elif col in [1, 6] %}
+                             <i class="fas fa-chess-knight black"></i>
+                        {% elif col in [2, 5] %}
+                             <i class="fas fa-chess-bishop black"></i>
+                        {% elif col == 4 %}
+                             <i class="fas fa-chess-queen black"></i>
+                        {% else %}
+                             <i class="fas fa-chess-king black"></i>
+                        {% endif %}
+                    {% else %}
+                        <i></i>
+                    {% endif %}
                     </div>
                 {% endfor %}
             </div>

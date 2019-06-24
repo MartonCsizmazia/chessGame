@@ -16,11 +16,18 @@ body {
     color: grey;
 }
 
-
 .dark {
   background-color: #8b4513;
 }
 
 .light {
   background-color: #cd853f;
+}
+
+.white {
+    color: white;
+}
+
+.black {
+    color: black;
 }
