@@ -5,9 +5,9 @@
 {% endblock %}
 
 {% block content %}
-    <div id="game-board" class="mb-3" >
+    <div id="game-board" class="container" >
         {% for row in range(8) %}
-            <div>
+            <div class="row">
                 {% for col in range(8) %}
                     <div class="game-cell {{ 'light' if (col+row) % 2 == 1 else 'dark' }}"
                         id="{{ col }}:{{ row }}">
