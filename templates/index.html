@@ -11,6 +11,7 @@
                 {% for col in range(8) %}
                     <div class="game-cell {{ 'light' if (col+row) % 2 == 1 else 'dark' }}"
                          id="{{ col }}:{{ row }}">
+                    <i id="icon-{{ col }}:{{ row }}"></i>
                     </div>
                 {% endfor %}
             </div>
