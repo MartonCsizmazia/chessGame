@@ -9,7 +9,7 @@
         {% for row in range(8) %}
             <div>
                 {% for col in range(8) %}
-                    <div class="game-cell"
+                    <div class="game-cell {{ 'light' if (col+row) % 2 == 1 else 'dark' }}"
                          id="{{ col }}:{{ row }}">
                     </div>
                 {% endfor %}
