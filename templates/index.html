@@ -5,15 +5,15 @@
 {% endblock %}
 
 {% block content %}
-    <div id="game-board" class="container">
-    {% for i in range(8) %}
-        <div>
-        {% for l in range(8) %}
-        <div class="card" id="{{i}}-{{l}}">
-            <i class="fas fa-square" ></i>
-        </div>
+    <div id="game-board" class="mb-3" >
+        {% for row in range(8) %}
+            <div>
+                {% for col in range(8) %}
+                    <div class="game-cell"
+                         id="{{ col }}:{{ row }}">
+                    </div>
+                {% endfor %}
+            </div>
         {% endfor %}
-        </div>
-    {% endfor %}
     </div>
 {% endblock %}
