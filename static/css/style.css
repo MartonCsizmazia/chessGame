@@ -12,3 +12,17 @@ body {
     margin: auto;
     border: 1px solid black;
 }
+
+
+.game-cell {
+  min-height: 12vw;
+  width: 12vw;
+}
+
+.brown {
+  background-color: #8b4513;
+}
+
+.tan {
+  background-color: #cd853f;
+}
