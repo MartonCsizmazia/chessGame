@@ -18,4 +18,38 @@ function winCheck() {
     return (kingCount === 2);
 }
 
+function checkCell(cellId) {
+    //return 'white', 'black', 'empty'
+    let actualCell = document.getElementById(`${cellId}`);
+    let actualAttribute = actualCell.getElementsByTagName('i')[0].getAttribute('class');
+    if (actualAttribute === null) {
+        return 'empty'
+    } else {
+        return actualAttribute.slice(-5,);
+    }
+}
+
+function possibleMoves(cellId) {
+    let actualCell = document.getElementById(`${cellId}`);
+    let actualAttribute = actualCell.getElementsByTagName('i')[0].getAttribute('class');
+    if (actualAttribute === null) {return []}
+    let actualIcon = actualAttribute.slice(13,17);
+    let actualColor = actualAttribute.slice(-5,);
+    switch (actualIcon) {
+        case 'pawn':
+            return pawnMoves(actualColor);
+        case 'rook':
+            return rookMoves(actualColor);
+        case 'bish':
+            return bishopMoves(actualColor);
+        case 'quee':
+            return queenMoves(actualColor);
+        case 'king':
+            return kingMoves(actualColor);
+        case 'knig':
+            return knightMoves(actualColor);
+    }
+}
+
+
 main();
