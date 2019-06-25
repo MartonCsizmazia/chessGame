@@ -18,7 +18,7 @@ function winCheck() {
     return (kingCount === 2);
 }
 
-function checkCell(cellId) {
+function checkCellContent(cellId) {
     //return 'white', 'black', 'empty'
     let actualCell = document.getElementById(`${cellId}`);
     let actualAttribute = actualCell.getElementsByTagName('i')[0].getAttribute('class');
@@ -27,6 +27,12 @@ function checkCell(cellId) {
     } else {
         return actualAttribute.slice(-5,);
     }
+}
+
+function checkCellOnTable(cellId) {
+    let column = cellId.slice(,2);
+    let row = cellId.slice(2,);
+    return (column <= 7 && column >=0 && row <= 7 && row >0)
 }
 
 function possibleMoves(cellId) {
