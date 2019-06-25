@@ -58,4 +58,12 @@ function possibleMoves(cellId) {
 }
 
 
+
+function rookMoves(actualColor) {
+    if(actualColor === 'black'){
+
+    }
+}
+
+
 main();
