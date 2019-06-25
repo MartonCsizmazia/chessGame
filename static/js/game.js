@@ -3,8 +3,33 @@ function main() {
     let containersArray = Array.from(containers);
     dragula(containersArray);
 
+    let gameCells = document.getElementsByClassName('game-cell');
+    for (let gameCell of gameCells) {
+        gameCell.addEventListener('mouseover', handleCellHover);
+        gameCell.addEventListener('mouseout', handleCellHover);
+    }
 
 }
+
+function possibleMoves(hoveredCellId) { //TODO remove before merge
+    return ['1:1'];
+}
+
+function handleCellHover(event) {
+    const hoveredCell = this;
+    const hoveredCellId = hoveredCell.id;
+    // style actual cell
+    console.log(hoveredCellId); // debug
+    hoveredCell.classList.toggle('current-hover-cell');
+    // style valid moves
+    let validCellIds = possibleMoves(hoveredCellId);
+    for (let validCellId of validCellIds) {
+        let validCell = document.getElementById(validCellId);
+        validCell.classList.toggle('current-valid-move');
+    }
+
+}
+
 
 function winCheck() {
     let gameCells = document.getElementsByClassName('game-cell');
