@@ -15,19 +15,24 @@ function possibleMoves(hoveredCellId) { //TODO remove before merge
     return ['1:1'];
 }
 
-function handleCellHover(event) {
-    const hoveredCell = this;
-    const hoveredCellId = hoveredCell.id;
-    // style actual cell
+function styleHoveredCell(hoveredCellId, hoveredCell) {
     console.log(hoveredCellId); // debug
     hoveredCell.classList.toggle('current-hover-cell');
-    // style valid moves
+}
+
+function styleValidMoves(hoveredCellId) {
     let validCellIds = possibleMoves(hoveredCellId);
     for (let validCellId of validCellIds) {
         let validCell = document.getElementById(validCellId);
         validCell.classList.toggle('current-valid-move');
     }
+}
 
+function handleCellHover(event) {
+    const hoveredCell = this;
+    const hoveredCellId = hoveredCell.id;
+    styleHoveredCell(hoveredCellId, hoveredCell);
+    styleValidMoves(hoveredCellId);
 }
 
 
