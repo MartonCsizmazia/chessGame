@@ -30,10 +30,29 @@ function checkCellContent(cellId) {
 }
 
 function checkCellOnTable(cellId) {
-    let column = cellId.slice(,2);
-    let row = cellId.slice(2,);
+    let column = parseInt(cellId.slice(0,2));
+    let row = parseInt(cellId.slice(2,));
     return (column <= 7 && column >=0 && row <= 7 && row >0)
 }
+
+function moveType3(icon, cellId, actualColor) {
+    let directions = {'king': [[1, -1], [1, 0], [1, 1], [0, 1], [-1, 1], [-1, 0], [-1, -1], [0, -1]],
+                      'knight': [[-1, -2], [-1, 2], [1, -2], [1, 2], [-2, 1], [-2, -1], [2, -1], [2, 1]]};
+    let actualDirections = directions[icon];
+    let column = parseInt(cellId.slice(0,2));
+    let row = parseInt(cellId.slice(2,));
+    let result = [];
+    for (let direction of actualDirections) {
+        let checkedColumn = column + direction[0];
+        let checkedRow = row + direction[1];
+        let checkedCell = checkedColumn.toString() + ':' + checkedRow.toString();
+        if (checkCellOnTable(checkedCell) && checkCellContent(checkedCell) !== actualColor) {
+            result.push(checkedCell);
+        }
+    }
+    return result
+}
+
 
 function possibleMoves(cellId) {
     let actualCell = document.getElementById(`${cellId}`);
@@ -51,9 +70,9 @@ function possibleMoves(cellId) {
         case 'quee':
             return queenMoves(actualColor);
         case 'king':
-            return kingMoves(actualColor);
+            return moveType3('king', cellId, actualColor);
         case 'knig':
-            return knightMoves(actualColor);
+            return moveType3('knight', cellId, actualColor);
     }
 }
 
