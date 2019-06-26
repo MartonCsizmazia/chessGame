@@ -4,6 +4,7 @@ function main() {
     let containersArray = Array.from(containers);
     dragula(containersArray);
 
+
 }
 
 function winCheck() {
