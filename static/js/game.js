@@ -18,6 +18,10 @@ function winCheck() {
     return (kingCount === 2);
 }
 
+function oppositeColor(color) {
+    return color === 'white' ? 'black' : 'white'
+}
+
 function checkCellContent(cellId) {
     //return 'white', 'black', 'empty'
     let actualCell = document.getElementById(`${cellId}`);
@@ -35,6 +39,55 @@ function checkCellOnTable(cellId) {
     return (column <= 7 && column >=0 && row <= 7 && row >0)
 }
 
+function moveType3(icon, cellId, actualColor) {
+    let directions = {'king': [[1, -1], [1, 0], [1, 1], [0, 1], [-1, 1], [-1, 0], [-1, -1], [0, -1]],
+                      'knight': [[-1, -2], [-1, 2], [1, -2], [1, 2], [-2, 1], [-2, -1], [2, -1], [2, 1]]};
+    let actualDirections = directions[icon];
+    let column = parseInt(cellId.slice(0,2));
+    let row = parseInt(cellId.slice(2,));
+    let result = [];
+    for (let direction of actualDirections) {
+        let checkedColumn = column + direction[0];
+        let checkedRow = row + direction[1];
+        let checkedCell = checkedColumn.toString() + ':' + checkedRow.toString();
+        if (checkCellOnTable(checkedCell) && checkCellContent(checkedCell) !== actualColor) {
+            result.push(checkedCell);
+        }
+    }
+    return result
+}
+
+function moveTypePawn(cellId, actualColor) {
+    let result = [];
+    let pointer = actualColor === 'white' ? 1 : -1;
+    let column = parseInt(cellId.slice(0,2));
+    let row = parseInt(cellId.slice(2,));
+
+    let actualDirections = [[0,1]];
+    if (row in [1, 6]) {
+        actualDirections.push([0,2]);
+    }
+    for (let direction of actualDirections) {
+        let checkedColumn = column + direction[0]*pointer;
+        let checkedRow = row + direction[1]*pointer;
+        let checkedCell = checkedColumn.toString() + ':' + checkedRow.toString();
+        if (checkCellOnTable(checkedCell) && checkCellContent(checkedCell) === 'empty') {
+            result.push(checkedCell);
+        }
+    }
+
+    actualDirections = [[1, 1], [1, -1]];
+    for (let direction of actualDirections) {
+        let checkedColumn = column + direction[0]*pointer;
+        let checkedRow = row + direction[1]*pointer;
+        let checkedCell = checkedColumn.toString() + ':' + checkedRow.toString();
+        if (checkCellOnTable(checkedCell) && checkCellContent(checkedCell) === oppositeColor(actualColor)) {
+            result.push(checkedCell);
+        }
+    }
+    return result;
+}
+
 function possibleMoves(cellId) {
     let actualCell = document.getElementById(`${cellId}`);
     let actualAttribute = actualCell.getElementsByTagName('i')[0].getAttribute('class');
@@ -43,7 +96,7 @@ function possibleMoves(cellId) {
     let actualColor = actualAttribute.slice(-5,);
     switch (actualIcon) {
         case 'pawn':
-            return pawnMoves(actualColor);
+            return moveTypePawn(cellId, actualColor);
         case 'rook':
             return type2Moves('rook', cellId, actualColor);
         case 'bish':
@@ -51,9 +104,9 @@ function possibleMoves(cellId) {
         case 'quee':
             return type2Moves('queen', cellId, actualColor);
         case 'king':
-            return kingMoves(actualColor);
+            return moveType3('king', cellId, actualColor);
         case 'knig':
-            return knightMoves(actualColor);
+            return moveType3('knight', cellId, actualColor);
     }
 }
 
