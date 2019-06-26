@@ -16,10 +16,6 @@ function isValidMove(el, target, source, sibling) {
     return validIds.includes(target.id);
 }
 
-function possibleMoves(hoveredCellId) { //TODO remove before merge
-    return ['2:4', '4:4'];
-}
-
 function styleHoveredCell(hoveredCellId, hoveredCell) {
     console.log(hoveredCellId); // debug
     hoveredCell.classList.toggle('current-hover-cell');
