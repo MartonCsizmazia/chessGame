@@ -43,3 +43,11 @@ body {
 .black {
     color: black;
 }
+
+.current-hover-cell {
+    background-color: grey;
+}
+
+.current-valid-move {
+    background-color: lawngreen;
+}
