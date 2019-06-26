@@ -30,8 +30,8 @@ function checkCellContent(cellId) {
 }
 
 function checkCellOnTable(cellId) {
-    let column = cellId.slice(,2);
-    let row = cellId.slice(2,);
+    let column = parseInt(cellId.slice(0,2));
+    let row = parseInt(cellId.slice(2,));
     return (column <= 7 && column >=0 && row <= 7 && row >0)
 }
 
@@ -45,11 +45,11 @@ function possibleMoves(cellId) {
         case 'pawn':
             return pawnMoves(actualColor);
         case 'rook':
-            return rookMoves(actualColor);
+            return type2Moves('rook', cellId, actualColor);
         case 'bish':
-            return bishopMoves(actualColor);
+            return type2Moves('bishop', cellId, actualColor);
         case 'quee':
-            return queenMoves(actualColor);
+            return type2Moves('queen', cellId, actualColor);
         case 'king':
             return kingMoves(actualColor);
         case 'knig':
@@ -58,11 +58,33 @@ function possibleMoves(cellId) {
 }
 
 
-
-function rookMoves(actualColor) {
-    if(actualColor === 'black'){
-
-    }
+function type2Moves(icon, cellId, actualColor ) {
+    let actualCol = parseInt(cellId.slice(0, 2));
+    let actualRow = parseInt(cellId.slice(2,));
+    let directions = {
+        'rook': [[0, 1], [0, -1], [1, 0], [-1, 0]],
+        'bishop': [[1, -1], [-1, -1], [-1, 1], [1, 1]],
+        'queen': [[0, 1], [0, -1], [1, 0], [-1, 0], [1, -1], [-1, -1], [-1, 1], [1, 1]]
+    };
+    let actualDirections = directions[icon];
+    let result = [];
+    let step = 1;
+    let enemyColor = actualColor === 'white' ? 'black' : 'white';
+    while (step < 8) {
+        for (let direction of actualDirections) {
+            let actualIndex = actualDirections.indexOf(direction);
+            let checkedColumn = actualCol + direction[0] * step;
+            let checkedRow = actualRow + direction[1] * step;
+            let checkedCell = checkedColumn.toString() + ':' + checkedRow.toString();
+            if (checkCellOnTable(checkedCell) && checkCellContent(checkedCell) === 'empty') {
+                result.push(checkedCell);
+            } else if(checkCellOnTable(checkedCell) && checkCellContent(checkedCell) === enemyColor){
+                result.push(checkedCell);
+                actualDirections.splice(actualIndex, 1, [0, 0]);
+            } else
+                actualDirections.splice(actualIndex, 1, [0, 0]);
+        }step++;
+    } return result
 }
 
 
