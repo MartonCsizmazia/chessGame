@@ -1,4 +1,26 @@
 function main() {
+
+    function isMovable(el, source, handle, sibling) {
+        if (!el.classList.contains(currentPlayer)) {
+            return false;
+        }
+        let cellId = source.id;
+        let possibilities = possibleMoves(cellId).length;
+        return (possibilities > 0);
+    }
+
+    function handleDrop(el, target, source, sibling) {
+        if (target === null) return;
+        let movedIcon = source.getElementsByTagName('i')[0].getAttribute('class');
+        target.getElementsByTagName('i')[0].setAttribute('class', movedIcon);
+        source.getElementsByTagName('i')[0].removeAttribute('class');
+        target.getElementsByTagName('i')[1].remove();
+        currentPlayer = currentPlayer === 'white' ? 'black' : 'white';
+        console.log(currentPlayer);
+    }
+
+    let currentPlayer = 'white';
+
     let containers = document.getElementsByClassName('game-cell');
     let containersArray = Array.from(containers);
     dragula(containersArray, {
@@ -16,14 +38,6 @@ function main() {
 function isValidMove(el, target, source, sibling) {
     let validIds = possibleMoves(source.id);
     return validIds.includes(target.id);
-}
-
-function handleDrop(el, target, source, sibling) {
-    if (target === null) return;
-    let movedIcon = source.getElementsByTagName('i')[0].getAttribute('class');
-    target.getElementsByTagName('i')[0].setAttribute('class', movedIcon);
-    source.getElementsByTagName('i')[0].removeAttribute('class');
-    target.getElementsByTagName('i')[1].remove();
 }
 
 function styleHoveredCell(hoveredCellId, hoveredCell) {
@@ -57,12 +71,6 @@ function winCheck() {
         }
     }
     return (kingCount === 2);
-}
-
-function isMovable(el, source, handle, sibling) {
-    let cellId = source.id;
-    let possibilities = possibleMoves(cellId).length;
-    return (possibilities > 0);
 }
 
 function oppositeColor(color) {
