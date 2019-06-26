@@ -50,3 +50,8 @@ body {
 .current-valid-move {
     border: 2px solid #ffe4dc;
 }
+
+i {
+    position: absolute;
+    transform: translate(-50%, 20%);
+}
