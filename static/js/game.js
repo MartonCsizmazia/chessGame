@@ -4,6 +4,7 @@ function main() {
     }
 
     function handleCellHover(event) {
+        deleteAllCellStyles();
         const hoveredCell = this;
         const hoveredCellId = hoveredCell.id;
         if (!containsCurrentPlayers(hoveredCell)) {
@@ -35,8 +36,6 @@ function main() {
     }
 
     let currentPlayer = 'white';
-    let hoveredCell = null;
-    let currentTargets = [];
 
     let gameCells = document.getElementsByClassName('game-cell');
     let gameCellsArray = Array.from(gameCells);
@@ -47,7 +46,14 @@ function main() {
     }).on('drop', handleDrop);
 
     for (let gameCell of gameCells) {
-        $(gameCell ).mouseenter( handleCellHover ).mouseleave( handleCellHover );
+        $(gameCell ).mouseenter( handleCellHover );
+    }
+}
+
+function deleteAllCellStyles() {
+    let gameCells = document.getElementsByClassName('game-cell');
+    for (let gameCell of gameCells) {
+        gameCell.classList.remove('current-hover-cell', 'current-valid-move')
     }
 }
 
