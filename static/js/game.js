@@ -124,7 +124,7 @@ function moveTypePawn(cellId, actualColor) {
         }
     }
 
-    actualDirections = [[1, 1], [1, -1]];
+    actualDirections = [[1, 1], [-1, 1]];
     for (let direction of actualDirections) {
         let checkedColumn = column + direction[0]*pointer;
         let checkedRow = row + direction[1]*pointer;
