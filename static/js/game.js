@@ -15,8 +15,7 @@ function main() {
         target.getElementsByTagName('i')[0].setAttribute('class', movedIcon);
         source.getElementsByTagName('i')[0].removeAttribute('class');
         target.getElementsByTagName('i')[1].remove();
-        currentPlayer = currentPlayer === 'white' ? 'black' : 'white';
-        console.log(currentPlayer);
+        currentPlayer = oppositeColor(currentPlayer);
     }
 
     let currentPlayer = 'white';
