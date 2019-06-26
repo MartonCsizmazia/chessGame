@@ -25,9 +25,12 @@ function main() {
     function handleDrop(el, target, source, sibling) {
         if (target === null) return;
         let movedIcon = source.getElementsByTagName('i')[0].getAttribute('class');
+        let targetElements = target.getElementsByTagName('i');
         target.getElementsByTagName('i')[0].setAttribute('class', movedIcon);
+        if (targetElements.length > 1) {
+            target.getElementsByTagName('i')[1].remove();
+        }
         source.getElementsByTagName('i')[0].removeAttribute('class');
-        target.getElementsByTagName('i')[1].remove();
         currentPlayer = oppositeColor(currentPlayer);
     }
 
@@ -48,6 +51,9 @@ function main() {
 }
 
 function isValidMove(el, target, source, sibling) {
+    if (sibling !== null) {
+        return false;
+    }
     let validIds = possibleMoves(source.id);
     return validIds.includes(target.id);
 }
