@@ -35,9 +35,11 @@ function main() {
     }
 
     let currentPlayer = 'white';
+    let hoveredCell = null;
+    let currentTargets = [];
 
     let gameCells = document.getElementsByClassName('game-cell');
-    let gameCellsArray = Array.from(containers);
+    let gameCellsArray = Array.from(gameCells);
     dragula(gameCellsArray, {
         moves: isMovable,
         accepts: isValidMove,
