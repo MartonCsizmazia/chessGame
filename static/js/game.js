@@ -1,4 +1,17 @@
 function main() {
+    function containsCurrentPlayers(cell) {
+        return cell.getElementsByTagName('i')[0].classList.contains(currentPlayer);
+    }
+
+    function handleCellHover(event) {
+        const hoveredCell = this;
+        const hoveredCellId = hoveredCell.id;
+        if (!containsCurrentPlayers(hoveredCell)) {
+            return;
+        }
+        styleHoveredCell(hoveredCellId, hoveredCell);
+        styleValidMoves(hoveredCellId);
+    }
 
     function isMovable(el, source, handle, sibling) {
         if (!el.classList.contains(currentPlayer)) {
@@ -50,14 +63,6 @@ function styleValidMoves(hoveredCellId) {
         let validCell = document.getElementById(validCellId);
         validCell.classList.toggle('current-valid-move');
     }
-}
-
-
-function handleCellHover(event) {
-    const hoveredCell = this;
-    const hoveredCellId = hoveredCell.id;
-    styleHoveredCell(hoveredCellId, hoveredCell);
-    styleValidMoves(hoveredCellId);
 }
 
 function winCheck() {
