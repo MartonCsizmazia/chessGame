@@ -1,7 +1,7 @@
 function main() {
     let containers = document.getElementsByClassName('game-cell');
     let containersArray = Array.from(containers);
-    dragula(containersArray);
+    dragula(containersArray, {accepts: isValidMove});
 
     let gameCells = document.getElementsByClassName('game-cell');
     for (let gameCell of gameCells) {
@@ -11,8 +11,13 @@ function main() {
 
 }
 
+function isValidMove(el, target, source, sibling) {
+    let validIds = possibleMoves(source.id);
+    return validIds.includes(target.id);
+}
+
 function possibleMoves(hoveredCellId) { //TODO remove before merge
-    return ['1:1'];
+    return ['2:4', '4:4'];
 }
 
 function styleHoveredCell(hoveredCellId, hoveredCell) {
