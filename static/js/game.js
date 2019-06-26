@@ -4,15 +4,15 @@ function main() {
     let containersArray = Array.from(containers);
     dragula(containersArray);
 
-
+    console.log(possibleMoves('6:6'));
 }
 
 function winCheck() {
     let gameCells = document.getElementsByClassName('game-cell');
     let kingCount = 0;
     for (let cell of gameCells) {
-        let actualAttribute = cell.getElementsByTagName('i')[0].getAttribute('class');
-        if (actualAttribute && 'fas fa-chess-king' === actualAttribute.slice(0,17)) {
+        let actualAttribute = cell.getElementsByTagName('i')[0].classList;
+        if (actualAttribute.contains('fas fa-chess-king')) {
             kingCount ++;
         }
     }
@@ -26,12 +26,13 @@ function oppositeColor(color) {
 function checkCellContent(cellId) {
     //return 'white', 'black', 'empty'
     let actualCell = document.getElementById(`${cellId}`);
-    let actualAttribute = actualCell.getElementsByTagName('i')[0].getAttribute('class');
-    if (actualAttribute === null) {
-        return 'empty'
-    } else {
-        return actualAttribute.slice(-5,);
+    let actualAttribute = actualCell.getElementsByTagName('i')[0].classList;
+    if (actualAttribute.contains('black')) {
+        return 'black'
+    } else if (actualAttribute.contains('white')) {
+        return 'white'
     }
+    return 'empty';
 }
 
 function checkCellOnTable(cellId) {
@@ -65,9 +66,8 @@ function moveTypePawn(cellId, actualColor) {
     let row = parseInt(cellId.slice(2,));
 
     let actualDirections = [[0,1]];
-    if (row in [1, 6]) {
-        actualDirections.push([0,2]);
-    }
+    if (row === 6 || row === 1) actualDirections.push([0,2])
+
     for (let direction of actualDirections) {
         let checkedColumn = column + direction[0]*pointer;
         let checkedRow = row + direction[1]*pointer;
@@ -91,24 +91,15 @@ function moveTypePawn(cellId, actualColor) {
 
 function possibleMoves(cellId) {
     let actualCell = document.getElementById(`${cellId}`);
-    let actualAttribute = actualCell.getElementsByTagName('i')[0].getAttribute('class');
-    if (actualAttribute === null) {return []}
-    let actualIcon = actualAttribute.slice(13,17);
-    let actualColor = actualAttribute.slice(-5,);
-    switch (actualIcon) {
-        case 'pawn':
-            return moveTypePawn(cellId, actualColor);
-        case 'rook':
-            return type2Moves('rook', cellId, actualColor);
-        case 'bish':
-            return type2Moves('bishop', cellId, actualColor);
-        case 'quee':
-            return type2Moves('queen', cellId, actualColor);
-        case 'king':
-            return moveType3('king', cellId, actualColor);
-        case 'knig':
-            return moveType3('knight', cellId, actualColor);
-    }
+    let actualAttribute = actualCell.getElementsByTagName('i')[0].classList;
+    if (!actualAttribute.contains('fas')) {return []}
+    let actualColor = (actualAttribute.contains('white')) ? 'white' : 'black';
+    if (actualAttribute.contains('fa-chess-rook')) return type2Moves('rook', cellId, actualColor);
+    else if (actualAttribute.contains('fa-chess-bishop')) return type2Moves('bishop', cellId, actualColor);
+    else if (actualAttribute.contains('fa-chess-queen')) return type2Moves('queen', cellId, actualColor);
+    else if (actualAttribute.contains('fa-chess-king')) return moveType3('king', cellId, actualColor);
+    else if (actualAttribute.contains('fa-chess-knight')) return moveType3('knight', cellId, actualColor);
+    else return moveTypePawn(cellId, actualColor);
 }
 
 
