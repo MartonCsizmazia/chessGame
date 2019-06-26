@@ -36,15 +36,14 @@ function main() {
 
     let currentPlayer = 'white';
 
-    let containers = document.getElementsByClassName('game-cell');
-    let containersArray = Array.from(containers);
-    dragula(containersArray, {
+    let gameCells = document.getElementsByClassName('game-cell');
+    let gameCellsArray = Array.from(containers);
+    dragula(gameCellsArray, {
         moves: isMovable,
         accepts: isValidMove,
         copy: true
     }).on('drop', handleDrop);
 
-    let gameCells = document.getElementsByClassName('game-cell');
     for (let gameCell of gameCells) {
         $(gameCell ).mouseenter( handleCellHover ).mouseleave( handleCellHover );
     }
