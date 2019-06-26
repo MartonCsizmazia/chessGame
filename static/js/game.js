@@ -11,7 +11,6 @@ function main() {
         gameCell.addEventListener('mouseover', handleCellHover);
         gameCell.addEventListener('mouseout', handleCellHover);
     }
-
 }
 
 function isValidMove(el, target, source, sibling) {
@@ -70,6 +69,11 @@ function winCheck() {
         }
     }
     return (kingCount === 2);
+}
+
+function isMovable(cellId) {
+    let possibilities = possibleMoves(cellId).length;
+    return (possibilities > 0);
 }
 
 function oppositeColor(color) {
