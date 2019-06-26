@@ -9,8 +9,7 @@ function main() {
 
     let gameCells = document.getElementsByClassName('game-cell');
     for (let gameCell of gameCells) {
-        gameCell.addEventListener('mouseover', handleCellHover);
-        gameCell.addEventListener('mouseout', handleCellHover);
+        $(gameCell ).mouseenter( handleCellHover ).mouseleave( handleCellHover );
     }
 }
 
