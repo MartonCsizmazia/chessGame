@@ -1,7 +1,10 @@
 function main() {
     let containers = document.getElementsByClassName('game-cell');
     let containersArray = Array.from(containers);
-    dragula(containersArray, {accepts: isValidMove});
+    dragula(containersArray, {
+        accepts: isValidMove,
+        copy: true
+    }).on('drop', handleDrop);
 
     let gameCells = document.getElementsByClassName('game-cell');
     for (let gameCell of gameCells) {
@@ -14,6 +17,26 @@ function main() {
 function isValidMove(el, target, source, sibling) {
     let validIds = possibleMoves(source.id);
     return validIds.includes(target.id);
+}
+
+function handleDrop(el, target, source, sibling) {
+    if (target === null) {
+        return;
+    }
+    console.log(target);
+    console.log(source);
+    let movedIcon = source.getElementsByTagName('i')[0].getAttribute('class');
+    console.log(target);
+    console.log(source);
+    target.getElementsByTagName('i')[0].setAttribute('class', movedIcon);
+    console.log(target);
+    console.log(source);
+    source.getElementsByTagName('i')[0].removeAttribute('class');
+    console.log(target);
+    console.log(source);
+    target.getElementsByTagName('i')[0].remove();
+    console.log(target);
+    console.log(source);
 }
 
 function styleHoveredCell(hoveredCellId, hoveredCell) {
@@ -68,7 +91,7 @@ function checkCellContent(cellId) {
 function checkCellOnTable(cellId) {
     let column = parseInt(cellId.slice(0,2));
     let row = parseInt(cellId.slice(2,));
-    return (column <= 7 && column >=0 && row <= 7 && row >0)
+    return (column <= 7 && column >=0 && row <= 7 && row >=0)
 }
 
 function moveType3(icon, cellId, actualColor) {
