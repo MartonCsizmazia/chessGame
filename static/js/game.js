@@ -2,6 +2,7 @@ function main() {
     let containers = document.getElementsByClassName('game-cell');
     let containersArray = Array.from(containers);
     dragula(containersArray, {
+        moves: isMovable,
         accepts: isValidMove,
         copy: true
     }).on('drop', handleDrop);
@@ -71,7 +72,8 @@ function winCheck() {
     return (kingCount === 2);
 }
 
-function isMovable(cellId) {
+function isMovable(el, source, handle, sibling) {
+    let cellId = source.id;
     let possibilities = possibleMoves(cellId).length;
     return (possibilities > 0);
 }
