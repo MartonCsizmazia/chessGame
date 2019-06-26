@@ -20,23 +20,11 @@ function isValidMove(el, target, source, sibling) {
 }
 
 function handleDrop(el, target, source, sibling) {
-    if (target === null) {
-        return;
-    }
-    console.log(target);
-    console.log(source);
+    if (target === null) return;
     let movedIcon = source.getElementsByTagName('i')[0].getAttribute('class');
-    console.log(target);
-    console.log(source);
     target.getElementsByTagName('i')[0].setAttribute('class', movedIcon);
-    console.log(target);
-    console.log(source);
     source.getElementsByTagName('i')[0].removeAttribute('class');
-    console.log(target);
-    console.log(source);
-    target.getElementsByTagName('i')[0].remove();
-    console.log(target);
-    console.log(source);
+    target.getElementsByTagName('i')[1].remove();
 }
 
 function styleHoveredCell(hoveredCellId, hoveredCell) {
@@ -125,7 +113,7 @@ function moveTypePawn(cellId, actualColor) {
     let row = parseInt(cellId.slice(2,));
 
     let actualDirections = [[0,1]];
-    if (row === 6 || row === 1) actualDirections.push([0,2])
+    if (row === 6 || row === 1) actualDirections.push([0,2]);
 
     for (let direction of actualDirections) {
         let checkedColumn = column + direction[0]*pointer;
