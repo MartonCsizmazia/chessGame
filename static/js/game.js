@@ -23,8 +23,9 @@ function main() {
         let possibilities = possibleMoves(cellId).length;
         return (possibilities > 0);
     }
-
+    var socket = io();
     function handleDrop(el, target, source) {
+        let moveTo = [el, target, source];
         if (target === null) return;
         let movedIcon = source.getElementsByTagName('i')[0].getAttribute('class');
         let targetElements = target.getElementsByTagName('i');
@@ -34,7 +35,15 @@ function main() {
         }
         source.getElementsByTagName('i')[0].removeAttribute('class');
         currentPlayer = oppositeColor(currentPlayer);
+        socket.emit('move', moveTo);
     }
+
+    socket.on('test_event', function(msg){
+        console.log('wwdew;ldfmewdflkmwedflkenwdf')
+    });
+
+
+
 
     let currentPlayer = 'white';
 
