@@ -12,8 +12,8 @@ def mainpage():
 
 
 @socketio.on('move')
-def handle_my_custom_event(message):
-    emit('test_event', {'data': 42}, broadcast=True)
+def handle_move(message):
+    emit('test_event', message, broadcast=True, include_self=False)
 
 
 if __name__ == '__main__':

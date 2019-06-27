@@ -24,22 +24,45 @@ function main() {
         return (possibilities > 0);
     }
     var socket = io();
-    function handleDrop(el, target, source) {
-        let moveTo = [el, target, source];
-        if (target === null) return;
+    function broadcastMove(el, target, source) {
         let movedIcon = source.getElementsByTagName('i')[0].getAttribute('class');
+        let movedId = source.getAttribute('id');
+        let targetId = target.getAttribute('id');
+
         let targetElements = target.getElementsByTagName('i');
-        target.getElementsByTagName('i')[0].setAttribute('class', movedIcon);
-        if (targetElements.length > 1) {
-            target.getElementsByTagName('i')[1].remove();
-        }
-        source.getElementsByTagName('i')[0].removeAttribute('class');
-        currentPlayer = oppositeColor(currentPlayer);
+        let iSourceTag = source.getElementsByTagName('i')[0];
+        let iTargetTag = target.getElementsByTagName('i')[1];
+
+        if (target === null) return;
+
+        else move(movedIcon, targetElements, iSourceTag, iTargetTag);
+
+        let moveTo = JSON.stringify([movedIcon, movedId, targetId]);
+
+        console.log(moveTo);
         socket.emit('move', moveTo);
     }
 
+    function getMoveDataById(movedIcon, movedId, targetId) {
+        let targetElements = document.getElementById(targetId).getElementsByTagName('i');
+        let iSourceTag = document.getElementById(movedId).getElementsByTagName('i')[0];
+
+        return [movedIcon, targetElements, iSourceTag]
+    }
+
+    function move(movedIcon, targetElements, iSourceTag) {
+        targetElements[0].setAttribute('class', movedIcon);
+        if (targetElements.length > 1) {
+            targetElements[1].remove();
+        }
+        iSourceTag.removeAttribute('class');
+        currentPlayer = oppositeColor(currentPlayer);
+    }
+
+
     socket.on('test_event', function(msg){
-        console.log('wwdew;ldfmewdflkmwedflkenwdf')
+        console.log(JSON.parse(msg));
+        move(...getMoveDataById(...(JSON.parse(msg))));
     });
 
 
@@ -53,7 +76,7 @@ function main() {
         moves: isMovable,
         accepts: isValidMove,
         copy: true
-    }).on('drop', handleDrop);
+    }).on('drop', broadcastMove);
 
     for (let gameCell of gameCells) {
         $(gameCell ).mouseenter( handleCellHover );
