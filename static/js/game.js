@@ -1,4 +1,5 @@
 function main() {
+
     function containsCurrentPlayers(cell) {
         return cell.getElementsByTagName('i')[0].classList.contains(currentPlayer);
     }
@@ -10,7 +11,7 @@ function main() {
         if (!containsCurrentPlayers(hoveredCell)) {
             return;
         }
-        styleHoveredCell(hoveredCellId, hoveredCell);
+        styleHoveredCell(hoveredCell);
         styleValidMoves(hoveredCellId);
     }
 
@@ -53,7 +54,7 @@ function main() {
 function deleteAllCellStyles() {
     let gameCells = document.getElementsByClassName('game-cell');
     for (let gameCell of gameCells) {
-        gameCell.classList.remove('current-hover-cell', 'current-valid-move')
+        gameCell.classList.remove('current-hover-cell')
     }
 }
 
@@ -65,8 +66,7 @@ function isValidMove(el, target, source, sibling) {
     return validIds.includes(target.id);
 }
 
-function styleHoveredCell(hoveredCellId, hoveredCell) {
-    console.log(hoveredCellId); // debug
+function styleHoveredCell(hoveredCell) {
     hoveredCell.classList.toggle('current-hover-cell');
 }
 
@@ -74,7 +74,7 @@ function styleValidMoves(hoveredCellId) {
     let validCellIds = possibleMoves(hoveredCellId);
     for (let validCellId of validCellIds) {
         let validCell = document.getElementById(validCellId);
-        validCell.classList.toggle('current-valid-move');
+        validCell.classList.toggle('current-hover-cell');
     }
 }
 
