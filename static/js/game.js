@@ -35,7 +35,7 @@ function main() {
 
         if (target === null) return;
 
-        else move(movedIcon, targetElements, iSourceTag, iTargetTag);
+        else move(movedIcon, targetElements, iSourceTag);
 
         let moveTo = JSON.stringify([movedIcon, movedId, targetId]);
 
