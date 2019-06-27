@@ -61,7 +61,6 @@ function main() {
 
 
     socket.on('test_event', function(msg){
-        console.log(JSON.parse(msg));
         move(...getMoveDataById(...(JSON.parse(msg))));
     });
 
