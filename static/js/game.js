@@ -23,7 +23,7 @@ function main() {
         let possibilities = possibleMoves(cellId).length;
         return (possibilities > 0);
     }
-    var socket = io();
+    let socket = io();
     function broadcastMove(el, target, source) {
         let movedIcon = source.getElementsByTagName('i')[0].getAttribute('class');
         let movedId = source.getAttribute('id');
@@ -51,6 +51,15 @@ function main() {
     }
 
     function move(movedIcon, targetElements, iSourceTag) {
+        let targetIcon = targetElements[0].classList;
+        console.log(targetIcon);
+
+        checkTargetIcon(targetIcon);
+        if (winCheck(targetIcon)) {
+            alert(`We have a winner, congratulations to the ${currentPlayer} player!`);
+            location.reload();
+        }
+
         targetElements[0].setAttribute('class', movedIcon);
         if (targetElements.length > 1) {
             targetElements[1].remove();
@@ -109,16 +118,27 @@ function styleValidMoves(hoveredCellId) {
     }
 }
 
-function winCheck() {
-    let gameCells = document.getElementsByClassName('game-cell');
-    let kingCount = 0;
-    for (let cell of gameCells) {
-        let actualAttribute = cell.getElementsByTagName('i')[0].getAttribute('class');
-        if (actualAttribute && 'fas fa-chess-king' === actualAttribute.slice(0,17)) {
-            kingCount ++;
-        }
-    }
-    return (kingCount === 2);
+function checkTargetIcon(icon) {
+    let actualIcon = '';
+    let actualColor = 'empty';
+    if (icon.contains('black')) actualColor='black';
+    else if (icon.contains('white')) actualColor='white';
+
+    if (actualColor === 'empty') return;
+
+    if (icon.contains('fa-chess-rook')) actualIcon = 'fa-chess-rook';
+    else if (icon.contains('fa-chess-bishop')) actualIcon = 'fa-chess-bishop';
+    else if (icon.contains('fa-chess-queen')) actualIcon = 'fa-chess-queen';
+    else if (icon.contains('fa-chess-king')) actualIcon = 'fa-chess-king';
+    else if (icon.contains('fa-chess-knight')) actualIcon = 'fa-chess-knight';
+    else actualIcon = 'fa-chess-pawn';
+
+    let binId = actualColor + '-bin';
+    document.getElementById(binId).innerHTML = document.getElementById(binId).innerHTML + `<i class="fas ${actualIcon} ${actualColor}"></i>`;
+}
+
+function winCheck(icon) {
+    return (icon.contains('fa-chess-king'))
 }
 
 function oppositeColor(color) {

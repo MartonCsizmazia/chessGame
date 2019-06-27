@@ -1,6 +1,5 @@
 body {
     padding: 80px 20px;
-    font-family: 'Acme', sans-serif;
     color: black;
     background: url("http://williamlombardychess.com/wp-content/uploads/2015/07/Chess-game-images-background-hd-1024x682.jpg")
     no-repeat center center fixed;
@@ -8,12 +7,14 @@ body {
     -moz-background-size: cover;
     -o-background-size: cover;
     background-size: cover;
+    font-family: 'Noto Sans KR', sans-serif;
 }
 
 #game-board{
     margin-left: 5%;
-    width: 400px;
+    width: 500px;
     box-shadow: 10px 10px 5px;
+    float: left;
 }
 
 .game-cell {
@@ -24,6 +25,23 @@ body {
     height: 50px;
     font-size: 35px;
     text-align: center;
+}
+
+.bin {
+    box-shadow: 10px 10px 5px;
+    border: 0.5px solid black;
+    width: 57px;
+    height: 250px;
+    font-size: 24px;
+    justify-content: center;
+    justify-items: center;
+}
+
+
+#bins {
+    display: inline-grid;
+    margin-left: 30px;
+    float: left;
 }
 
 .dark {
@@ -46,8 +64,7 @@ body {
     border: 2px solid #ffe4dc;
 }
 
-
-i {
+.game-cell i {
     position: absolute;
     transform: translate(-50%, 20%);
 }
