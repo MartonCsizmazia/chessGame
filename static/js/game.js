@@ -3,7 +3,7 @@ function main() {
         return cell.getElementsByTagName('i')[0].classList.contains(currentPlayer);
     }
 
-    function handleCellHover(event) {
+    function handleCellHover() {
         deleteAllCellStyles();
         const hoveredCell = this;
         const hoveredCellId = hoveredCell.id;
@@ -14,7 +14,7 @@ function main() {
         styleValidMoves(hoveredCellId);
     }
 
-    function isMovable(el, source, handle, sibling) {
+    function isMovable(el, source) {
         if (!el.classList.contains(currentPlayer)) {
             return false;
         }
@@ -23,7 +23,7 @@ function main() {
         return (possibilities > 0);
     }
 
-    function handleDrop(el, target, source, sibling) {
+    function handleDrop(el, target, source) {
         if (target === null) return;
         let movedIcon = source.getElementsByTagName('i')[0].getAttribute('class');
         let targetElements = target.getElementsByTagName('i');
