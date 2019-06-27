@@ -137,7 +137,12 @@ function moveTypePawn(cellId, actualColor) {
     let row = parseInt(cellId.slice(2,));
 
     let actualDirections = [[0,1]];
-    if (row === 6 || row === 1) actualDirections.push([0,2]);
+    if (row === 6 || row === 1)  {
+        let checkedCell = column.toString() + ":" + (pointer+row).toString();
+        if (checkCellContent(checkedCell) === 'empty') {
+            actualDirections.push([0,2]);
+        }
+    }
 
     for (let direction of actualDirections) {
         let checkedColumn = column + direction[0]*pointer;
