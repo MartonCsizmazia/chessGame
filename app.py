@@ -1,5 +1,6 @@
 from flask import Flask, render_template, redirect, url_for
 from flask_socketio import SocketIO, send, emit
+import sys
 
 app = Flask(__name__)
 app.config['SECRET_KEY'] = 'secret!'
@@ -17,4 +18,4 @@ def handle_move(message):
 
 
 if __name__ == '__main__':
-    socketio.run(app)
+    socketio.run(app, host="0.0.0.0", port=sys.argv[1])
